@@ -4,7 +4,6 @@ from os.path import join, dirname
 import requests
 from dotenv import load_dotenv
 import sentry_sdk
-import mhz19
 
 dotenv_path = join(dirname(__file__), ".env")
 load_dotenv(verbose=True, dotenv_path=dotenv_path)
@@ -28,7 +27,8 @@ if __name__ == "__main__":
     data = json.dumps({"command": "illuminance"})
     illuminance = requests.post(LOCALHOST_URL, headers=headers, data=data).json()["result"]
     print("Illuminance :", illuminance)
-    co2 = mhz19.measure_co2concentration()
+    data = json.dumps({"command": "co2"})
+    co2 = requests.post(LOCALHOST_URL, headers=headers, data=data).json()["result"]
     print("CO2 :", co2)
 
     data = json.dumps({"Temperature": temperature, "Pressure": pressure, "Humidity": humidity, "Illuminance": illuminance, "CO2": co2})
