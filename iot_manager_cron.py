@@ -31,7 +31,7 @@ if __name__ == "__main__":
     co2 = requests.post(LOCALHOST_URL, headers=headers, data=data).json()["result"]
     print("CO2 :", co2)
 
-    data = json.dumps({"Temperature": temperature, "Pressure": pressure, "Humidity": humidity, "Illuminance": illuminance, "CO2": co2})
+    data = json.dumps({"action": "update", "Temperature": temperature, "Pressure": pressure, "Humidity": humidity, "Illuminance": illuminance, "CO2": co2})
     response = requests.post(GAS_URL, headers=headers, data=data).json()
     print(response)
     if response["status"] == 1:
