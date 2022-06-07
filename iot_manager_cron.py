@@ -34,8 +34,5 @@ if __name__ == "__main__":
     data = json.dumps({"action": "update", "Temperature": temperature, "Pressure": pressure, "Humidity": humidity, "Illuminance": illuminance, "CO2": co2})
     response = requests.post(GAS_URL, headers=headers, data=data).json()
     print(response)
-    if response["status"] == 1:
-        sentry_sdk.set_level("info")
-        sentry_sdk.capture_message(f"Status: {response['status']}")
-    else:
+    if response["status"] != 1:
         sentry_sdk.capture_exception(Exception(f"Status: {response}"))
